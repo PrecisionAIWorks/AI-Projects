@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fibonacci - SOP & Guideline Repository</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        
+        header {
+            background-color: #2c3e50;
+            padding: 20px;
+            color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: white;
+            border-radius: 4px;
+            padding: 8px 15px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            width: 300px;
+        }
+        
+        .search-bar input {
+            border: none;
+            padding: 5px;
+            flex-grow: 1;
+            font-size: 14px;
+        }
+        
+        .filter-section {
+            background: white;
+            border-radius: 4px;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .filter-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+        
+        .filter-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .filter-item select, .filter-item input {
+            padding: 6px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .sop-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        
+        .sop-card {
+            background: white;
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .sop-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+        
+        .card-header {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            background-color: #f9f9f9;
+        }
+        
+        .card-category {
+            display: inline-block;
+            padding: 4px 8px;
+            background-color: #3498db;
+            color: white;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+        
+        .card-title {
+            margin: 0 0 5px 0;
+            font-size: 18px;
+        }
+        
+        .card-meta {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .card-body {
+            padding: 15px;
+        }
+        
+        .card-description {
+            margin-bottom: 15px;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+        
+        .card-footer {
+            padding: 10px 15px;
+            background-color: #f9f9f9;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .card-version {
+            font-size: 12px;
+            padding: 3px 6px;
+            background-color: #2ecc71;
+            color: white;
+            border-radius: 4px;
+        }
+        
+        .card-review {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .card-status {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+        
+        .status-active {
+            background-color: #2ecc71;
+        }
+        
+        .status-review {
+            background-color: #f39c12;
+        }
+        
+        .status-draft {
+            background-color: #e74c3c;
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        
+        .pagination-btn {
+            padding: 8px 12px;
+            margin: 0 5px;
+            border: 1px solid #ddd;
+            background-color: white;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .pagination-btn.active {
+            background-color: #3498db;
+            color: white;
+            border-color: #3498db;
+        }
+        
+        .lifecycle-badge {
+            display: inline-block;
+            margin-left: 10px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+        
+        .lifecycle-active {
+            background-color: #2ecc71;
+            color: white;
+        }
+        
+        .lifecycle-review {
+            background-color: #f39c12;
+            color: white;
+        }
+        
+        .lifecycle-deprecated {
+            background-color: #e74c3c;
+            color: white;
+        }
+        
+        .owner-avatar {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+        
+        .view-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Fibonacci SOP & Guideline Repository</h1>
+            <p>Centralized, version-controlled knowledge base for Standard Operating Procedures</p>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="dashboard-header">
+            <h2>All SOPs & Guidelines</h2>
+            <div class="search-bar">
+                <input type="text" placeholder="Search SOPs, guidelines, owners...">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+            </div>
+        </div>
+        
+        <div class="filter-section">
+            <div class="filter-row">
+                <div class="filter-item">
+                    <label>Category:</label>
+                    <select>
+                        <option>All Categories</option>
+                        <option>Quality Assurance</option>
+                        <option>Annotation</option>
+                        <option>Data Validation</option>
+                        <option>Model Evaluation</option>
+                        <option>Project Management</option>
+                    </select>
+                </div>
+                <div class="filter-item">
+                    <label>Status:</label>
+                    <select>
+                        <option>All Statuses</option>
+                        <option>Active</option>
+                        <option>Under Review</option>
+                        <option>Deprecated</option>
+                        <option>Draft</option>
+                    </select>
+                </div>
+                <div class="filter-item">
+                    <label>Owner:</label>
+                    <select>
+                        <option>All Owners</option>
+                        <option>Maria Santos</option>
+                        <option>Alex Kumar</option>
+                        <option>Nina Patel</option>
+                        <option>James Wilson</option>
+                    </select>
+                </div>
+            </div>
+            <div class="filter-row">
+                <div class="filter-item">
+                    <label>Last Updated:</label>
+                    <select>
+                        <option>Any time</option>
+                        <option>Last 7 days</option>
+                        <option>Last 30 days</option>
+                        <option>Last 90 days</option>
+                    </select>
+                </div>
+                <div class="filter-item">
+                    <label>Version:</label>
+                    <input type="text" placeholder="e.g. v2.0">
+                </div>
+            </div>
+        </div>
+        
+        <div class="sop-grid">
+            <!-- SOP Card 1 -->
+            <div class="sop-card">
+                <div class="card-header">
+                    <div class="card-category">Quality Assurance</div>
+                    <h3 class="card-title">RLHF Safety Evaluation Protocol</h3>
+                    <div class="card-meta">
+                        <span>Owner: Maria Santos</span>
+                        <span class="lifecycle-badge lifecycle-active">Active</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p class="card-description">Standard protocol for evaluating safety concerns in RLHF datasets, including toxic content identification, bias detection, and harmful instruction filtering.</p>
+                    <p><strong>Applied to:</strong> Safety Evals, Preference Studies</p>
+                </div>
+                <div class="card-footer">
+                    <div>
+                        <span class="card-version">v2.4</span>
+                        <span class="card-review">Next review: Dec 15, 2024</span>
+                    </div>
+                    <button class="view-btn">View SOP</button>
+                </div>
+            </div>
+            
+            <!-- SOP Card 2 -->
+            <div class="sop-card">
+                <div class="card-header">
+                    <div class="card-category">Annotation</div>
+                    <h3 class="card-title">Multimodal Data Annotation Guidelines</h3>
+                    <div class="card-meta">
+                        <span>Owner: Alex Kumar</span>
+                        <span class="lifecycle-badge lifecycle-review">Under Review</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p class="card-description">Comprehensive guidelines for annotating multimodal datasets, including image-text pairs, audio transcriptions, and cross-modal alignment evaluation.</p>
+                    <p><strong>Applied to:</strong> Multimodal SFT, Vision Projects</p>
+                </div>
+                <div class="card-footer">
+                    <div>
+                        <span class="card-version">v1.8</span>
+                        <span class="card-review">Review in progress</span>
+                    </div>
+                    <button class="view-btn">View SOP</button>
+                </div>
+            </div>
+            
+            <!-- SOP Card 3 -->
+            <div class="sop-card">
+                <div class="card-header">
+                    <div class="card-category">Data Validation</div>
+                    <h3 class="card-title">Edge Case Detection Protocol</h3>
+                    <div class="card-meta">
+                        <span>Owner: Nina Patel</span>
+                        <span class="lifecycle-badge lifecycle-active">Active</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p class="card-description">Methodology for identifying and handling edge cases in annotation datasets, with special focus on high-disagreement examples and ambiguous content.</p>
+                    <p><strong>Applied to:</strong> All Projects</p>
+                </div>
+                <div class="card-footer">
+                    <div>
+                        <span class="card-version">v3.1</span>
+                        <span class="card-review">Next review: Jan 20, 2025</span>
+                    </div>
+                    <button class="view-btn">View SOP</button>
+                </div>
+            </div>
+            
+            <!-- SOP Card 4 -->
+            <div class="sop-card">
+                <div class="card-header">
+                    <div class="card-category">Model Evaluation</div>
+                    <h3 class="card-title">Agentic Planning Evaluation Framework</h3>
+                    <div class="card-meta">
+                        <span>Owner: James Wilson</span>
+                        <span class="lifecycle-badge lifecycle-active">Active</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p class="card-description">Comprehensive framework for evaluating planning capabilities in agentic AI systems, including goal alignment, temporal consistency, and safety constraint adherence.</p>
+                    <p><strong>Applied to:</strong> Agent Planning</p>
+                </div>
+                <div class="card-footer">
+                    <div>
+                        <span class="card-version">v2.3</span>
+                        <span class="card-review">Next review: Nov 30, 2024</span>
+                    </div>
+                    <button class="view-btn">View SOP</button>
+                </div>
+            </div>
+            
+            <!-- SOP Card 5 -->
+            <div class="sop-card">
+                <div class="card-header">
+                    <div class="card-category">Project Management</div>
+                    <h3 class="card-title">Scope Change Request Protocol</h3>
+                    <div class="card-meta">
+                        <span>Owner: Maria Santos</span>
+                        <span class="lifecycle-badge lifecycle-active">Active</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p class="card-description">Formal process for handling scope change requests, including impact assessment, timeline adjustment, and client communication templates.</p>
+                    <p><strong>Applied to:</strong> All Projects</p>
+                </div>
+                <div class="card-footer">
+                    <div>
+                        <span class="card-version">v1.5</span>
+                        <span class="card-review">Next review: Feb 10, 2025</span>
+                    </div>
+                    <button class="view-btn">View SOP</button>
+                </div>
+            </div>
+            
+            <!-- SOP Card 6 -->
+            <div class="sop-card">
+                <div class="card-header">
+                    <div class="card-category">Quality Assurance</div>
+                    <h3 class="card-title">Inter-Annotator Agreement Protocol</h3>
+                    <div class="card-meta">
+                        <span>Owner: Nina Patel</span>
+                        <span class="lifecycle-badge lifecycle-deprecated">Deprecated</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p class="card-description">Standardized methods for measuring and improving inter-annotator agreement, including Cohen's Kappa calculation, disagreement resolution, and calibration procedures.</p>
+                    <p><strong>Replaced by:</strong> Annotator Quality Framework v2.0</p>
+                </div>
+                <div class="card-footer">
+                    <div>
+                        <span class="card-version">v1.2</span>
+                        <span class="card-review">Deprecated on Oct 15, 2024</span>
+                    </div>
+                    <button class="view-btn">View SOP</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="pagination">
+            <button class="pagination-btn">Previous</button>
+            <button class="pagination-btn active">1</button>
+            <button class="pagination-btn">2</button>
+            <button class="pagination-btn">3</button>
+            <button class="pagination-btn">Next</button>
+        </div>
+    </div>
+</body>
+</html>
